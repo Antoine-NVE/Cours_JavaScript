@@ -4,7 +4,7 @@
         "nom": "Ampoule LED",
         "prix": 60,
         "categorie": "Optiques",
-        "image": "images/ampoule-led/png",
+        "image": "images/ampoule-led.png",
         "description": "Distance d’éclairage : 100 mètres !",
         "disponibilite": true
     },
@@ -38,7 +38,7 @@
         "id": 5,
         "nom": "Balai d'essuie-glace",
         "prix": 29.1,
-        "image": "images/balai-essui-glace.png",
+        "image": "images/balai-essuie-glace.png",
         "description": "Performances d’essuyage au top ! Longueur : 550 mm.",
         "disponibilite": true
     }
