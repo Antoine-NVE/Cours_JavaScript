@@ -1,4 +1,8 @@
-const pieces = await fetch('pieces-autos.json').then((pieces) => pieces.json());
+import { ajoutListenersAvis } from './avis.js';
+
+const pieces = await fetch('http://localhost:8081/pieces').then((pieces) =>
+    pieces.json()
+);
 const sectionFiches = document.querySelector('.fiches');
 
 function genererPieces(pieces) {
@@ -28,6 +32,10 @@ function genererPieces(pieces) {
             ? 'En stock'
             : 'Rupture de stock';
 
+        const avisBouton = document.createElement('button');
+        avisBouton.dataset.id = article.id;
+        avisBouton.textContent = 'Afficher les avis';
+
         const pieceElement = document.createElement('article');
         pieceElement.appendChild(imageElement);
         pieceElement.appendChild(nomElement);
@@ -35,8 +43,11 @@ function genererPieces(pieces) {
         pieceElement.appendChild(categorieElement);
         pieceElement.appendChild(descriptionElement);
         pieceElement.appendChild(stockElement);
+        pieceElement.appendChild(avisBouton);
         sectionFiches.appendChild(pieceElement);
     }
+
+    ajoutListenersAvis();
 }
 
 genererPieces(pieces);
