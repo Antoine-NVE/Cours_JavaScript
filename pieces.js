@@ -1,8 +1,10 @@
-import { ajoutListenersAvis } from './avis.js';
+import { ajoutListenersAvis, ajoutListenerEnvoyerAvis } from './avis.js';
 
 const reponse = await fetch('http://localhost:8081/pieces');
 const pieces = await reponse.json();
 const sectionFiches = document.querySelector('.fiches');
+
+ajoutListenerEnvoyerAvis();
 
 function genererPieces(pieces) {
     for (let i = 0; i < pieces.length; i++) {
