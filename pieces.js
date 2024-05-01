@@ -1,7 +1,20 @@
-import { ajoutListenersAvis, ajoutListenerEnvoyerAvis } from './avis.js';
+import {
+    ajoutListenersAvis,
+    ajoutListenerEnvoyerAvis,
+    afficherAvis,
+} from './avis.js';
 
-const reponse = await fetch('http://localhost:8081/pieces');
-const pieces = await reponse.json();
+let pieces = window.localStorage.getItem('pieces');
+if (pieces === null) {
+    const reponse = await fetch('http://localhost:8081/pieces');
+    pieces = await reponse.json();
+    console.log(pieces);
+
+    const valeurPieces = JSON.stringify(pieces);
+    window.localStorage.setItem('pieces', valeurPieces);
+} else {
+    pieces = JSON.parse(pieces);
+}
 const sectionFiches = document.querySelector('.fiches');
 
 ajoutListenerEnvoyerAvis();
@@ -38,6 +51,7 @@ function genererPieces(pieces) {
         avisBouton.textContent = 'Afficher les avis';
 
         const pieceElement = document.createElement('article');
+        pieceElement.dataset.id = pieces[i].id
         pieceElement.appendChild(imageElement);
         pieceElement.appendChild(nomElement);
         pieceElement.appendChild(prixElement);
@@ -52,6 +66,19 @@ function genererPieces(pieces) {
 }
 
 genererPieces(pieces);
+
+for (let i = 0; i < pieces.length; i++) {
+    const id = pieces[i].id;
+    const avisJSON = window.localStorage.getItem(`avis-pieces-${id}`);
+    const avis = JSON.parse(avisJSON);
+
+    if (avis !== null) {
+        const pieceElement = document.querySelector(
+            `article[data-id="${id}"]`
+        );
+        afficherAvis(pieceElement, avis);
+    }
+}
 
 const boutonTrier = document.querySelector('.btn-trier');
 boutonTrier.addEventListener('click', () => {
@@ -134,4 +161,9 @@ inputPrixMax.addEventListener('input', () => {
     });
     document.querySelector('.fiches').innerHTML = '';
     genererPieces(piecesFiltrees);
+});
+
+const boutonMettreAJour = document.querySelector('.btn-maj');
+boutonMettreAJour.addEventListener('click', function () {
+    window.localStorage.removeItem('pieces');
 });
