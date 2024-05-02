@@ -2,6 +2,7 @@ import {
     ajoutListenersAvis,
     ajoutListenerEnvoyerAvis,
     afficherAvis,
+    afficherGraphiqueAvis,
 } from './avis.js';
 
 let pieces = window.localStorage.getItem('pieces');
@@ -51,7 +52,7 @@ function genererPieces(pieces) {
         avisBouton.textContent = 'Afficher les avis';
 
         const pieceElement = document.createElement('article');
-        pieceElement.dataset.id = pieces[i].id
+        pieceElement.dataset.id = pieces[i].id;
         pieceElement.appendChild(imageElement);
         pieceElement.appendChild(nomElement);
         pieceElement.appendChild(prixElement);
@@ -73,9 +74,7 @@ for (let i = 0; i < pieces.length; i++) {
     const avis = JSON.parse(avisJSON);
 
     if (avis !== null) {
-        const pieceElement = document.querySelector(
-            `article[data-id="${id}"]`
-        );
+        const pieceElement = document.querySelector(`article[data-id="${id}"]`);
         afficherAvis(pieceElement, avis);
     }
 }
@@ -167,3 +166,5 @@ const boutonMettreAJour = document.querySelector('.btn-maj');
 boutonMettreAJour.addEventListener('click', function () {
     window.localStorage.removeItem('pieces');
 });
+
+await afficherGraphiqueAvis();
